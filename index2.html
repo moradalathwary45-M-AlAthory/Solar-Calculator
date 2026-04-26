@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الطاقة الشمسية - مؤسسة عادل الجرادي</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #f39c12;
+            --bg-color: #f4f7f6;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--primary-color);
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            margin: auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #d35400;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-right: 5px solid #27ae60;
+            border-radius: 5px;
+            display: none;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>حاسبة الطاقة الشمسية ☀️</h2>
+    <div class="input-group">
+        <label>إجمالي حمل الأجهزة (وات):</label>
+        <input type="number" id="totalWatts" placeholder="مثلاً: 1000">
+    </div>
+    <div class="input-group">
+        <label>ساعات التشغيل المطلوبة:</label>
+        <input type="number" id="hours" placeholder="مثلاً: 5">
+    </div>
+    <div class="input-group">
+        <label>فولتية النظام (V):</label>
+        <input type="number" id="volt" value="24">
+    </div>
+    <button onclick="calculateSolar()">احسب النتائج</button>
+
+    <div id="resultBox" class="result">
+        <p id="res1"></p>
+        <p id="res2"></p>
+        <p id="res3"></p>
+    </div>
+
+    <div class="footer">
+        برمجة المهندس: مراد عبد الواحد النعمان <br>
+        مؤسسة عادل الجرادي لأنظمة الطاقة المتجددة
+    </div>
+</div>
+
+<script>
+    function calculateSolar() {
+        const watts = document.getElementById('totalWatts').value;
+        const hours = document.getElementById('hours').value;
+        const volt = document.getElementById('volt').value;
+
+        if (watts > 0 && hours > 0) {
+            const totalEnergy = watts * hours;
+            // حساب سعة البطارية المطلوبة مع معامل أمان 20%
+            const batteryAh = (totalEnergy / volt) * 1.2;
+            // حساب الألواح المطلوبة (بافتراض 5 ساعات ذروة شمسية)
+            const panelsWatt = totalEnergy / 5;
+
+            document.getElementById('resultBox').style.display = 'block';
+            document.getElementById('res1').innerHTML = "<b>إجمالي الطاقة:</b> " + totalEnergy + " وات/ساعة";
+            document.getElementById('res2').innerHTML = "<b>سعة البطاريات المطلوبة:</b> " + batteryAh.toFixed(1) + " أمبير";
+            document.getElementById('res3').innerHTML = "<b>إجمالي قدرة الألواح:</b> " + panelsWatt.toFixed(0) + " وات";
+        } else {
+            alert("يرجى إدخال قيم صحيحة");
+        }
+    }
+</script>
+
+</body>
+      </html>
+      
